@@ -301,5 +301,25 @@ public class TmdbApiTests {
                 .statusCode(200)
         ;
     }
+    @Test(dependsOnMethods = "GetMovieDetails")
+    public void AddMovieRating(){
+        Map<String,Double> ratings=new HashMap<>();
+        ratings.put("value", 8.5);
+
+        given()
+                .spec(reqSpec)
+                .body(ratings)
+
+                .when()
+                .post(url + "/movie/"+mediaID+"/rating")
+
+                .then()
+                .log().body()
+                .statusCode(201)
+
+        ;
+
+    }
+
 
 }
