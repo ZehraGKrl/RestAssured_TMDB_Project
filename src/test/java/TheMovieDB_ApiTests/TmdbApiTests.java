@@ -222,5 +222,20 @@ public class TmdbApiTests {
                 .statusCode(200)
         ;
     }
+    @Test(dependsOnMethods = "GetPopulars")
+    public void GetTopRated() {
+
+        given()
+                .spec(reqSpec)
+
+                .when()
+                .get(url + "/movie/top_rated")
+
+                .then()
+                .log().body()
+                .statusCode(200)
+        ;
+    }
+
 
 }
