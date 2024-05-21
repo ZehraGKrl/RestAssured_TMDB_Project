@@ -178,4 +178,19 @@ public class TmdbApiTests {
         ;
     }
 
+    @Test(dependsOnMethods = "GetWatchlistMovies")
+    public void GetMovieGenres() {
+
+        given()
+                .spec(reqSpec)
+
+                .when()
+                .get(url + "/genre/movie/list")
+
+                .then()
+                .log().body()
+                .statusCode(200)
+        ;
+    }
+
 }
