@@ -193,4 +193,19 @@ public class TmdbApiTests {
         ;
     }
 
+    @Test(dependsOnMethods = "GetMovieGenres")
+    public void GetNowPlaying() {
+
+        given()
+                .spec(reqSpec)
+
+                .when()
+                .get(url + "/movie/now_playing")
+
+                .then()
+                .log().body()
+                .statusCode(200)
+        ;
+    }
+
 }
