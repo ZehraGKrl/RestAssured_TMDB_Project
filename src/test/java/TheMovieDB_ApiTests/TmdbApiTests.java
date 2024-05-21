@@ -343,8 +343,8 @@ public class TmdbApiTests {
     public void unauthorizedAccess(){
 
         int mediaID=18;
-        Map<String, Integer> unauth = new HashMap<>();
-        unauth.put("media_id",mediaID);
+        Map<String, Integer> access = new HashMap<>();
+        access.put("media_id",mediaID);
 
 
         int status_code=
@@ -352,7 +352,7 @@ public class TmdbApiTests {
                         .spec(reqSpec)
                         .pathParam("listID", "[valid_list_id]")
                         .queryParam("session_id","[invalid_session_id]")
-                        .body(unauth)
+                        .body(access)
 
 
                         .when()
