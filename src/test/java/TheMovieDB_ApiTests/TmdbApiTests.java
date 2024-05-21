@@ -148,5 +148,34 @@ public class TmdbApiTests {
         ;
     }
 
+    @Test(dependsOnMethods = "GetFavoriteMovies")
+    public void GetRatedMovies() {
+
+        given()
+                .spec(reqSpec)
+
+                .when()
+                .get(url + "/account" + "/" + accountID + "/rated/movies")
+
+                .then()
+                .log().body()
+                .statusCode(200)
+        ;
+    }
+
+    @Test(dependsOnMethods = "GetRatedMovies")
+    public void GetWatchlistMovies() {
+
+        given()
+                .spec(reqSpec)
+
+                .when()
+                .get(url + "/account" + "/" + accountID + "/watchlist/movies")
+
+                .then()
+                .log().body()
+                .statusCode(200)
+        ;
+    }
 
 }
