@@ -208,4 +208,19 @@ public class TmdbApiTests {
         ;
     }
 
+    @Test(dependsOnMethods = "GetNowPlaying")
+    public void GetPopulars() {
+
+        given()
+                .spec(reqSpec)
+
+                .when()
+                .get(url + "/movie/popular")
+
+                .then()
+                .log().body()
+                .statusCode(200)
+        ;
+    }
+
 }
