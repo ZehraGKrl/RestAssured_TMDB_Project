@@ -237,5 +237,37 @@ public class TmdbApiTests {
         ;
     }
 
+    @Test(dependsOnMethods = "GetTopRated")
+    public void GetUpcoming() {
+
+        given()
+                .spec(reqSpec)
+
+                .when()
+                .get(url + "/movie/upcoming")
+
+                .then()
+                .log().body()
+                .statusCode(200)
+        ;
+    }
+    @Test(dependsOnMethods = "GetUpcoming")
+    public void SearchForMovies(){
+
+        given()
+                .spec(reqSpec)
+                .param("query","dune")
+
+                .when()
+                .get(url + "/search/movie")
+
+
+                .then()
+                //.log().body()
+                .statusCode(200)
+        ;
+
+    }
+
 
 }
