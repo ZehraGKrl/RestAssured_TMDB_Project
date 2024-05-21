@@ -263,11 +263,43 @@ public class TmdbApiTests {
 
 
                 .then()
-                //.log().body()
+                .log().body()
                 .statusCode(200)
         ;
 
     }
 
+
+    @Test(dependsOnMethods = "SearchForMovies")
+    public void SearchForKeywords(){
+
+        given()
+                .spec(reqSpec)
+                .param("query","way")
+
+                .when()
+                .get(url + "/search/keyword")
+
+
+                .then()
+                .log().body()
+                .statusCode(200)
+        ;
+
+    }
+    @Test(dependsOnMethods = "SearchForKeywords")
+    public void GetMovieDetails() {
+
+        given()
+                .spec(reqSpec)
+
+                .when()
+                .get(url + "/movie" + "/" +mediaID)
+
+                .then()
+                .log().body()
+                .statusCode(200)
+        ;
+    }
 
 }
