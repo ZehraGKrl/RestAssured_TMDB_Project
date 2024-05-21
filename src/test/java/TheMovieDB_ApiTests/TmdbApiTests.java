@@ -58,14 +58,14 @@ public class TmdbApiTests {
         String rndmFullName = RandomStringUtils.randomAlphabetic(10);
         String rndmPassword = RandomStringUtils.randomAlphanumeric(12);
 
-        Map<String, String> userInfo = new HashMap<>();
-        userInfo.put("username", rndmFullName);
-        userInfo.put("password", rndmPassword);
+        Map<String, String> user = new HashMap<>();
+        user.put("username", rndmFullName);
+        user.put("password", rndmPassword);
 
 
         given()
                 .spec(reqSpec)
-                .body(userInfo)
+                .body(user)
                 .post("/login")
                 .then()
                 .statusCode(400);
@@ -113,6 +113,25 @@ public class TmdbApiTests {
                         ;
     }
 
+    @Test (dependsOnMethods = "addToFavorites")
+    public void addToWatchlist() {
 
+        Map<String, Object> addToWatchlist = new HashMap<>();
+        addToWatchlist.put("media_type", "movie");
+        addToWatchlist.put("media_id", mediaID);
+        addToWatchlist.put("watchlist", true);
+
+
+        given()
+                .spec(reqSpec)
+                .body(addToWatchlist)
+                .when()
+                .post(url + "/account/" + accountID + "/watchlist")
+
+                .then()
+                .log().body()
+                .statusCode(201)
+        ;
+    }
 
 }
