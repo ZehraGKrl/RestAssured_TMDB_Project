@@ -18,12 +18,11 @@ public class TmdbApiTests {
 
     RequestSpecification reqSpec;
     String authenticityToken;
-  // String username = "zhrgkrl";
-  // String password = "q1q1q1";
-    public int accountID=0;
+    // String username = "zhrgkrl";
+    // String password = "q1q1q1";
+    public int accountID = 0;
     String url = "https://api.themoviedb.org/3";
-    String mediaID="5e959bc3db72c00014ad69d6";
-
+    String mediaID = "5e959bc3db72c00014ad69d6";
 
 
     @BeforeClass
@@ -81,7 +80,7 @@ public class TmdbApiTests {
                 given()
                         .spec(reqSpec)
                         .when()
-                        .get(url+"/account")
+                        .get(url + "/account")
                         .then()
                         .log().body()
                         .statusCode(200)
@@ -90,9 +89,9 @@ public class TmdbApiTests {
         ;
         System.out.println("accountID = " + accountID);
 
-        }
+    }
 
-    @Test (dependsOnMethods = "getAccountDetails")
+    @Test(dependsOnMethods = "getAccountDetails")
     public void addToFavorites() {
 
         Map<String, Object> addToFavorites = new HashMap<>();
@@ -101,19 +100,19 @@ public class TmdbApiTests {
         addToFavorites.put("favorite", true);
 
 
-                given()
-                        .spec(reqSpec)
-                        .body(addToFavorites)
-                        .when()
-                        .post(url + "/account/" + accountID + "/favorite")
+        given()
+                .spec(reqSpec)
+                .body(addToFavorites)
+                .when()
+                .post(url + "/account/" + accountID + "/favorite")
 
-                        .then()
-                        .log().body()
-                        .statusCode(201)
-                        ;
+                .then()
+                .log().body()
+                .statusCode(201)
+        ;
     }
 
-    @Test (dependsOnMethods = "addToFavorites")
+    @Test(dependsOnMethods = "addToFavorites")
     public void addToWatchlist() {
 
         Map<String, Object> addToWatchlist = new HashMap<>();
@@ -133,5 +132,21 @@ public class TmdbApiTests {
                 .statusCode(201)
         ;
     }
+
+    @Test(dependsOnMethods = "addToWatchlist")
+    public void GetFavoriteMovies() {
+
+        given()
+                .spec(reqSpec)
+
+                .when()
+                .get(url + "/account" + "/" + accountID + "/favorite/movies")
+
+                .then()
+                .log().body()
+                .statusCode(200)
+        ;
+    }
+
 
 }
