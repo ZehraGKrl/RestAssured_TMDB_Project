@@ -7,7 +7,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
+import static org.hamcrest.Matchers.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -320,6 +320,53 @@ public class TmdbApiTests {
         ;
 
     }
+    @Test(dependsOnMethods = "AddMovieRating")
+    public void DeleteMovieRating(){
 
 
-}
+        given()
+                .spec(reqSpec)
+
+
+                .when()
+                .delete(url + "/movie/"+mediaID+"/rating")
+
+                .then()
+                .log().body()
+                .statusCode(200)
+
+        ;
+
+    }
+
+    @Test(dependsOnMethods = "DeleteMovieRating")
+    public void unauthorizedAccess(){
+
+        int mediaID=18;
+        Map<String, Integer> unauth = new HashMap<>();
+        unauth.put("media_id",mediaID);
+
+
+        int status_code=
+                given()
+                        .spec(reqSpec)
+                        .pathParam("listID", "[valid_list_id]")
+                        .queryParam("session_id","[invalid_session_id]")
+                        .body(unauth)
+
+
+                        .when()
+                        .post(url+"/list/"+"{listID}"+"/add_item")
+
+
+                        .then()
+                        .statusCode(401)
+                        //.log().body()
+                        .extract().path("status_code")
+                ;
+        Assert.assertEquals(status_code,3);
+    }
+
+    }
+
+
